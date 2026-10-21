@@ -366,8 +366,8 @@ private fun SignalCard(
         modifier = Modifier
             .fillMaxWidth()
             .border(
-                width = if (signal.isBestOpportunity) 1.5.dp else 1.dp,
-                color = if (signal.isBestOpportunity) GoldAccent else TealBorder,
+                width = 1.dp,
+                color = TealBorder,
                 shape = RoundedCornerShape(18.dp)
             )
             .testTag("signal_card_${signal.id}"),
