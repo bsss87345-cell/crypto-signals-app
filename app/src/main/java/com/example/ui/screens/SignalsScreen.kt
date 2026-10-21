@@ -563,7 +563,7 @@ private fun SignalCard(
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "الربح المتوقع:",
+                        text = "الربح حتى الهدف 3:",
                             color = TextMuted,
                             fontSize = 11.sp
                         )
