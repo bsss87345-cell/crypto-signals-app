@@ -686,15 +686,32 @@ private fun SignalCard(
                             text = "اقتراح مبلغ الاستثمار",
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
-                        )
+                                               )
                     }
                 }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { expanded = !expanded }
+                    .padding(vertical = 8.dp)
+                    .testTag("details_toggle_${signal.id}"),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = if (expanded) "إخفاء التفاصيل" else "المزيد من التفاصيل",
+                    color = TealPrimary,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }
 }
 
-private fun formatCountdown(seconds: Long): String {
+private fun formatCountdown(seconds: Long): String { 
     val m = seconds / 60
     val s = seconds % 60
     return String.format(Locale.US, "%02d:%02d", m, s)
