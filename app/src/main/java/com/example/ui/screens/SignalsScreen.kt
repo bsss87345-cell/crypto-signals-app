@@ -553,6 +553,7 @@ private fun SignalCard(
                     }
                 }
 
+                if (expanded) {
                 Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(DividerColor))
 
                 // Targets row: هدف 1 / هدف 2 / هدف 3
