@@ -373,6 +373,24 @@ fun InvestmentDialog(
                                 fontSize = 12.sp
                             )
                         }
+
+                        // Exit split across the three targets
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "تقسيم الإغلاق:",
+                                color = TextSecondary,
+                                fontSize = 12.sp
+                            )
+                            Text(
+                                text = "40% / 30% / 30%",
+                                color = TextMuted,
+                                fontSize = 12.sp
+                            )
+                        }
                     }
                 }
 
