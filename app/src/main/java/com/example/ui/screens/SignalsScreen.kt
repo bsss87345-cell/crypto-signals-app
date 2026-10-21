@@ -657,7 +657,7 @@ private fun SignalCard(
             }
 
             // Only "مباشر" cards show a button "اقتراح مبلغ الاستثمار"
-            if (isLive) {
+                if (isLive && expanded) {
                 Spacer(modifier = Modifier.height(14.dp))
                 Button(
                     onClick = onInvestClick,
