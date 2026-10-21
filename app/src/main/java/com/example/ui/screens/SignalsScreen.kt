@@ -568,7 +568,7 @@ private fun SignalCard(
                             fontSize = 11.sp
                         )
                         Text(
-                        text = "+${numberFormat.format(signal.weightedExpectedProfitPercent)}%",
+                        text = "+${numberFormat.format(signal.target3ProfitPercent)}%",
                             color = GreenAccent,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.ExtraBold
