@@ -49,7 +49,7 @@ android {
       // AI Studio.
       signingConfig = signingConfigs.getByName("release")
     }
-        debug {
+    debug {
     }
   }
   compileOptions {
