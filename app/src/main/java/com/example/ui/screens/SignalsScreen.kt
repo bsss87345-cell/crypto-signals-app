@@ -578,6 +578,42 @@ private fun SignalCard(
 
                 Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(DividerColor))
 
+                // Targets row: هدف 1 / هدف 2 / هدف 3
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "هدف 1:", color = TextMuted, fontSize = 11.sp)
+                        Text(
+                            text = "$${numberFormat.format(signal.target1)}",
+                            color = GreenAccent,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "هدف 2:", color = TextMuted, fontSize = 11.sp)
+                        Text(
+                            text = "$${numberFormat.format(signal.target2)}",
+                            color = GreenAccent,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "هدف 3:", color = TextMuted, fontSize = 11.sp)
+                        Text(
+                            text = "$${numberFormat.format(signal.target3)}",
+                            color = GreenAccent,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(DividerColor))
+
                 // Row 2: Duration & Countdown to Candle Close
                 Row(
                     modifier = Modifier.fillMaxWidth(),
