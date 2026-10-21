@@ -591,6 +591,11 @@ private fun SignalCard(
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
                         )
+                        Text(
+                            text = "+${numberFormat.format(signal.target1ProfitPercent)}%",
+                            color = TextSecondary,
+                            fontSize = 11.sp
+                        )
                     }
                     Column(modifier = Modifier.weight(1f)) {
                         Text(text = "هدف 2:", color = TextMuted, fontSize = 11.sp)
