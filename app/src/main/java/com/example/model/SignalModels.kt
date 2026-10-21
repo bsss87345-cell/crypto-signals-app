@@ -52,6 +52,12 @@ data class Signal(
     val target2ProfitPercent: Double get() = profitPercentTo(target2)
     val target3ProfitPercent: Double get() = profitPercentTo(target3)
 
+    // Weighted expected profit: 40% at target 1, 30% at target 2, 30% at target 3
+    val weightedExpectedProfitPercent: Double
+        get() = 0.4 * target1ProfitPercent +
+            0.3 * target2ProfitPercent +
+            0.3 * target3ProfitPercent
+
     // Calculates suggested investment details based on capital
     fun calculateInvestment(capital: Double): InvestmentSuggestion {
         val safeCapital = if (capital <= 0.0) 1000.0 else capital
