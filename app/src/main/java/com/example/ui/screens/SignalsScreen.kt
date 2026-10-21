@@ -604,6 +604,7 @@ private fun SignalCard(
                         )
                     }
                 }
+                }
 
                 Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(DividerColor))
 
