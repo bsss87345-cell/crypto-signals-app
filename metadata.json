@@ -1,0 +1,6 @@
+{
+  "name": "إشارات كريبتو",
+  "description": "تطبيق إشارات تداول العملات الرقمية وتحليل المخاطر وحساب الصفقات",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
