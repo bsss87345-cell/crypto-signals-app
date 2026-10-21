@@ -547,21 +547,7 @@ private fun SignalCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "الهدف (TP):",
-                            color = TextMuted,
-                            fontSize = 11.sp
-                        )
-                        Text(
-                            text = "$${numberFormat.format(signal.targetPrice)}",
-                            color = GreenAccent,
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Column(modifier = Modifier.weight(1f)) {
+                 Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "وقف الخسارة (SL):",
                             color = TextMuted,
