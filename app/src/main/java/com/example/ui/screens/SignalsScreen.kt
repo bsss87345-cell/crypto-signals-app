@@ -379,32 +379,6 @@ private fun SignalCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Star badge on top if best card: "أفضل فرصة حالياً"
-            if (signal.isBestOpportunity) {
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(GoldGlow)
-                        .border(1.dp, GoldBorder, RoundedCornerShape(8.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = null,
-                        tint = GoldAccent,
-                        modifier = Modifier.size(14.dp)
-                    )
-                    Text(
-                        text = "أفضل فرصة حالياً",
-                        color = GoldAccent,
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-            }
 
             // Top Row: Pair Name + Coin Logo, Status (مباشر with red dot or انتظار gray), Direction badge
             Row(
