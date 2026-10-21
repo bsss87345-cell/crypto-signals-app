@@ -363,6 +363,7 @@ private fun SignalCard(
     val isBuy = signal.direction == SignalDirection.BUY
     val directionColor = if (isBuy) GreenAccent else RedAccent
     val isLive = signal.status == SignalStatus.LIVE
+    var expanded by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
