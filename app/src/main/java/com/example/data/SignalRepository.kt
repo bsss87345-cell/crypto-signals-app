@@ -14,7 +14,8 @@ import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 class SignalRepository(
-    private val api: ExchangeApi = ExchangeApi()
+    private val api: ExchangeApi = ExchangeApi(),
+    private val store: SignalStore? = null
 ) {
     companion object {
         val COINS = listOf(
