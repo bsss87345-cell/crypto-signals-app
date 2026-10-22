@@ -33,7 +33,8 @@ data class Signal(
     val stopLoss: Double,
     val durationText: String,
     val candleCloseSecondsRemaining: Long,
-    val isBestOpportunity: Boolean = false
+    val isBestOpportunity: Boolean = false,
+    val score: Int = 0
 ) {
     // Stop loss distance in percentage: |currentPrice - stopLoss| / currentPrice
     val stopLossDistancePercent: Double
