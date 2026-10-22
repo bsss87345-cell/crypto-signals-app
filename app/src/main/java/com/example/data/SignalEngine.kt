@@ -126,6 +126,15 @@ object SignalEngine {
         val buyScore = scoreFor(Side.BUY)
         val sellScore = scoreFor(Side.SELL)
 
+        val side = if (buyScore >= sellScore) Side.BUY else Side.SELL
+        val basicsCount = if (side == Side.BUY) buyCount else sellCount
+        val trendOk = trend == side
+        val isLive = basicsCount == 3 && trendOk && adxOk && volumeOk
+
+        val rsiNow = rsi[last]
+        val rsiComfortable = if (side == Side.BUY) rsiNow in 55.0..65.0 else rsiNow in 35.0..45.0
+        val higher = isLive && rsiComfortable && adx[last] > ADX_HIGH
+
         val a = atr[last]
         val dir = if (side == Side.BUY) 1.0 else -1.0
 
