@@ -155,8 +155,10 @@ return EngineResult(
     target2 = price + dir * T2_ATR_MULT * a,
     target3 = price + dir * T3_ATR_MULT * a,
     conditionsMet = basicsCount +
-        listOf(trendOk, adxOk, volumeOk).count { it },
-    score = if (side == Side.BUY) buyScore else sellScore
+    listOf(trendOk, adxOk, volumeOk).count { it },
+    score = if (side == Side.BUY) buyScore else sellScore,
+    entryLow = entryLow,
+    entryHigh = entryHigh
 )
     }
 
