@@ -24,6 +24,10 @@ object SignalEngine {
     const val T1_ATR_MULT = 1.0
     const val T2_ATR_MULT = 2.0
     const val T3_ATR_MULT = 3.0
+
+// نصف عرض منطقة الدخول حول EMA20.
+    const val ENTRY_ZONE_ATR_MULT = 0.25
+
     const val ADX_MIN = 20.0
     const val ADX_HIGH = 25.0
     const val VOLUME_AVG_PERIOD = 20
