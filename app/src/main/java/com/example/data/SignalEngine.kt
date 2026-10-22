@@ -137,23 +137,15 @@ object SignalEngine {
         val a = atr[last]
 val dir = if (side == Side.BUY) 1.0 else -1.0
 
-// منطقة الدخول والأهداف تعتمد على الشموع المغلقة فقط.
-// لا تتغير عند تغير السعر اللحظي عبر WebSocket.
-val entryPrice = ema20[last]
-val entryHalfWidth = a * ENTRY_ZONE_ATR_MULT
-
 return EngineResult(
     side = side,
     isLive = isLive,
     isHigherQuality = higher,
     price = price,
-    entryPrice = entryPrice,
-    entryZoneLow = entryPrice - entryHalfWidth,
-    entryZoneHigh = entryPrice + entryHalfWidth,
-    stopLoss = entryPrice - dir * STOP_ATR_MULT * a,
-    target1 = entryPrice + dir * T1_ATR_MULT * a,
-    target2 = entryPrice + dir * T2_ATR_MULT * a,
-    target3 = entryPrice + dir * T3_ATR_MULT * a,
+    stopLoss = price - dir * STOP_ATR_MULT * a,
+    target1 = price + dir * T1_ATR_MULT * a,
+    target2 = price + dir * T2_ATR_MULT * a,
+    target3 = price + dir * T3_ATR_MULT * a,
     conditionsMet = basicsCount +
         listOf(trendOk, adxOk, volumeOk).count { it },
     score = if (side == Side.BUY) buyScore else sellScore
