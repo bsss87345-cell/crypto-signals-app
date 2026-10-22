@@ -270,16 +270,8 @@ class SignalsViewModel : ViewModel() {
     }
 
     fun refreshSignals() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isRefreshing = true) }
-            delay(600) // Realistic network refresh simulation
-            _uiState.update { state ->
-                state.copy(
-                    isRefreshing = false,
-                    lastUpdateTime = getCurrentFormattedTime()
-                )
-            }
-        }
+        if (_uiState.value.isRefreshing) return
+        viewModelScope.launch { loadRealSignals() }
     }
 
     fun openInvestmentDialog(signal: Signal) {
