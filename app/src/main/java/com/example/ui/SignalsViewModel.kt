@@ -207,16 +207,21 @@ class SignalsViewModel : ViewModel() {
         viewModelScope.launch {
             while (true) {
                 delay(1000)
+                var shouldReload = false
                 _uiState.update { state ->
                     val updatedSignals = state.signals.map { sig ->
                         if (sig.candleCloseSecondsRemaining > 0) {
                             sig.copy(candleCloseSecondsRemaining = sig.candleCloseSecondsRemaining - 1)
                         } else {
-                            // Reset candle timer when reaching 0 (e.g., 900s for a 15m candle)
-                            sig.copy(candleCloseSecondsRemaining = 900)
+                            shouldReload = true
+                            sig
                         }
                     }
                     state.copy(signals = updatedSignals)
+                }
+                if (shouldReload && !_uiState.value.isRefreshing) {
+                    delay(3000) // give the exchange a moment to publish the closed candle
+                    loadRealSignals()
                 }
             }
         }
