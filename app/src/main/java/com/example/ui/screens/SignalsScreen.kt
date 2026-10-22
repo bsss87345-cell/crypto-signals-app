@@ -164,6 +164,24 @@ fun SignalsScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+              if (filteredSignals.isEmpty()) {
+                    item {
+                        Text(
+                            text = if (isRefreshing) {
+                                "جاري تحميل الإشارات..."
+                            } else {
+                                "لا توجد إشارات حالياً. إذا استمرت القائمة فاضية تأكد من الإنترنت واضغط زر التحديث."
+                            },
+                            color = TextSecondary,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 48.dp)
+                        )
+                    }
+                }
+
                 items(filteredSignals, key = { it.id }) { signal ->
                     SignalCard(
                         signal = signal,
