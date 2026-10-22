@@ -122,7 +122,43 @@ class SignalRepository(
             isBestOpportunity = false,
             entryLow = r.entryLow,
             entryHigh = r.entryHigh,
-            validUntilMillis = nowMillis + validHours * 3_600_000L
+                        validUntilMillis = nowMillis + validHours * 3_600_000L
+        )
+    }
+
+    // Rebuilds a card from a stored (frozen) signal. Only price, chart and 24h change are live.
+    private fun signalFromStored(s: StoredSignal, c1: List<Candle>, nowMillis: Long): Signal {
+        val price = c1.last().close
+        val closes = c1.map { it.close }
+        val ref = if (closes.size > 24) closes[closes.size - 25] else closes.first()
+        val change24 = if (ref > 0) (price - ref) / ref * 100.0 else 0.0
+        val secondsLeft = ((c1.last().closeTime - nowMillis) / 1000L).coerceAtLeast(0L)
+        val mid = (s.entryLow + s.entryHigh) / 2.0
+        val profit3 = if (mid > 0) abs(s.target3 - mid) / mid * 100.0 else 0.0
+
+        return Signal(
+            id = s.coin.lowercase() + "-1h",
+            pair = "${s.coin}/USDT",
+            coinSymbol = s.coin,
+            status = if (SignalScore.isSignal(s.score)) SignalStatus.LIVE else SignalStatus.PENDING,
+            direction = if (s.side == Side.BUY) SignalDirection.BUY else SignalDirection.SELL,
+            currentPrice = price,
+            change24h = Math.round(change24 * 100.0) / 100.0,
+            sparklinePoints = closes.takeLast(24).map { it.toFloat() },
+            quality = if (s.score >= 70) SignalQuality.HIGHER else SignalQuality.STANDARD,
+            score = s.score,
+            expectedProfitPercent = profit3,
+            targetPrice = s.target3,
+            target1 = s.target1,
+            target2 = s.target2,
+            target3 = s.target3,
+            stopLoss = s.stopLoss,
+            durationText = s.durationText,
+            candleCloseSecondsRemaining = secondsLeft,
+            isBestOpportunity = false,
+            entryLow = s.entryLow,
+            entryHigh = s.entryHigh,
+            validUntilMillis = s.validUntilMillis
         )
     }
 }
