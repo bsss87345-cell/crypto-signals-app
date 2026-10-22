@@ -50,6 +50,30 @@ class SignalsViewModel : ViewModel() {
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     private val repository = SignalRepository()
+    private val priceStream = PriceStream()
+
+    // Live prices: updates only currentPrice of each card
+    private fun startLivePrices() {
+        priceStream.start(SignalRepository.COINS.map { it + "USDT" }.toSet())
+        viewModelScope.launch {
+            priceStream.prices.collect { prices ->
+                if (prices.isEmpty()) return@collect
+                _uiState.update { state ->
+                    state.copy(
+                        signals = state.signals.map { sig ->
+                            val p = prices[sig.coinSymbol + "USDT"]
+                            if (p != null) sig.copy(currentPrice = p) else sig
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onCleared() {
+        priceStream.stop()
+        super.onCleared()
+    }
 
     init {
         viewModelScope.launch { loadRealSignals() }
