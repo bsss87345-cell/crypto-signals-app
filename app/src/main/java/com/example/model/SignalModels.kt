@@ -51,10 +51,11 @@ data class Signal(
             return if (dist <= 0.0001) 0.01 else dist
         }
 
-    // Profit % of each target relative to current price (works for buy and sell)
+        // Profit % of each target relative to the entry zone midpoint (fixed, does not move with live price)
     private fun profitPercentTo(target: Double): Double {
-        if (currentPrice <= 0.0) return 0.0
-        return kotlin.math.abs(target - currentPrice) / currentPrice * 100.0
+        val base = entryMid
+        if (base <= 0.0) return 0.0
+        return kotlin.math.abs(target - base) / base * 100.0
     }
     val target1ProfitPercent: Double get() = profitPercentTo(target1)
     val target2ProfitPercent: Double get() = profitPercentTo(target2)
