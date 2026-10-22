@@ -98,7 +98,8 @@ class SignalEngineTest {
         val spiked = base.dropLast(1) + base.last().copy(high = base.last().high + 500.0)
         val a = SignalEngine.analyze(base, c4)!!
         val b = SignalEngine.analyze(spiked, c4)!!
-        assertEquals(a.target1 - a.price, b.target1 - b.price, 1e-9)
+        assertEquals(a.target1, b.target1, 1e-9)
+        assertEquals(a.stopLoss, b.stopLoss, 1e-9)
     }
 
     @Test
