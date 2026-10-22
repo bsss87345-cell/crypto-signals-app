@@ -48,13 +48,12 @@ class SignalsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
+    private val repository = SignalRepository()
+
     init {
         viewModelScope.launch { loadRealSignals() }
         startCountdownTicker()
     }
-
-    private val repository = SignalRepository()
-
     private fun sortSignals(list: List<Signal>): List<Signal> =
         list.sortedWith(
             compareBy<Signal> { it.status != SignalStatus.LIVE }
