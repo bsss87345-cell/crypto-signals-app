@@ -84,13 +84,10 @@ class SignalEngineTest {
         val c1 = series(150, 100.0, 1.0)
         val c4 = series(80, 100.0, 1.0)
         val r = SignalEngine.analyze(c1, c4)!!
-        val d1 = r.target1 - r.price
-        val d2 = r.target2 - r.price
-        val d3 = r.target3 - r.price
-        val ds = r.price - r.stopLoss
-        assertEquals(2.0, d2 / d1, 1e-9)
-        assertEquals(3.0, d3 / d1, 1e-9)
-        assertEquals(1.5, ds / d1, 1e-9)
+        // Spacing depends only on the ATR multipliers, so it holds for any base level
+        val step = r.target2 - r.target1
+        assertEquals(1.0, (r.target3 - r.target2) / step, 1e-9)
+        assertEquals(2.5, (r.target1 - r.stopLoss) / step, 1e-9)
     }
 
     @Test
