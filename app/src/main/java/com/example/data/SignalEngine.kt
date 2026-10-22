@@ -115,6 +115,26 @@ object SignalEngine {
         val higher = isLive && rsiComfortable && adx[last] > ADX_HIGH
 
         val price = candles1h.last().close // latest price (running candle)
+
+        val volumeRatio = if (avgVolume > 0.0) volumes.last() / avgVolume else 0.0
+        fun scoreFor(s: Side) = SignalScore.score(
+            ScoreInput(
+                side = s,
+                price = price,
+                ema20 = ema20[last],
+                ema50 = ema50[last],
+                rsi = rsi[last],
+                macd = macd.macd[last],
+                macdSignal = macd.signal[last],
+                candlesSinceCross = candlesSinceCross(macd.macd, macd.signal, s),
+                adx = adx[last],
+                volumeRatio = volumeRatio,
+                trend4hAgrees = trend == s
+            )
+        )
+        val buyScore = scoreFor(Side.BUY)
+        val sellScore = scoreFor(Side.SELL)
+
         val a = atr[last]
         val dir = if (side == Side.BUY) 1.0 else -1.0
 
