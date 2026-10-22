@@ -97,9 +97,6 @@ object SignalEngine {
 
         val buyCount = buyBasics.count { it }
         val sellCount = sellBasics.count { it }
-        val side = if (buyCount >= sellCount) Side.BUY else Side.SELL
-        val basicsCount = if (side == Side.BUY) buyCount else sellCount
-
         // Filters
         val trend = trend4h(candles4h)
         val trendOk = trend == side
