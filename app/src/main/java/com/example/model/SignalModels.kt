@@ -39,6 +39,10 @@ data class Signal(
     val entryHigh: Double = 0.0,
     val validUntilMillis: Long = 0L
 ) {
+        // Middle of the entry zone (falls back to current price when no zone is set)
+    val entryMid: Double
+        get() = if (entryLow > 0.0 && entryHigh > 0.0) (entryLow + entryHigh) / 2.0 else currentPrice
+
     // Stop loss distance in percentage: |currentPrice - stopLoss| / currentPrice
     val stopLossDistancePercent: Double
         get() {
