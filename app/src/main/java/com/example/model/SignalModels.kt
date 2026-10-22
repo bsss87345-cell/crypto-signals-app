@@ -46,11 +46,11 @@ data class Signal(
 ) {
     // Stop loss distance in percentage: |currentPrice - stopLoss| / currentPrice
     val stopLossDistancePercent: Double
-        get() {
-            if (currentPrice <= 0.0) return 0.02
-            val dist = kotlin.math.abs(currentPrice - stopLoss) / currentPrice
-            return if (dist <= 0.0001) 0.01 else dist
-        }
+    get() {
+        if (entryPrice <= 0.0) return 0.02
+        val dist = kotlin.math.abs(entryPrice - stopLoss) / entryPrice
+        return if (dist <= 0.0001) 0.01 else dist
+    }
 
     // Profit % of each target relative to current price (works for buy and sell)
     // النسب ثابتة من سعر الدخول الأول، وليست من السعر الحي.
