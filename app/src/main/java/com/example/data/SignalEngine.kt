@@ -148,7 +148,7 @@ object SignalEngine {
             target3 = price + dir * T3_ATR_MULT * a,
             conditionsMet = basicsCount +
             listOf(trendOk, adxOk, volumeOk).count { it },
-            score = maxOf(buyScore, sellScore)
+            score = if (side == Side.BUY) buyScore else sellScore
         )
     }
 
