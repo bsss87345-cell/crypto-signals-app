@@ -6,6 +6,7 @@ import com.example.model.Signal
 import com.example.model.SignalDirection
 import com.example.model.SignalQuality
 import com.example.model.SignalStatus
+import com.example.data.PriceStream
 import com.example.data.SignalRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
