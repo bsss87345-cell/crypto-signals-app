@@ -44,7 +44,7 @@ class SignalRepository(
             }
         }
 
-    private fun buildSignal(coin: String, nowMillis: Long): Signal? {
+   private suspend fun buildSignal(coin: String, nowMillis: Long): Signal? { 
         val symbol = coin + "USDT"
         val c1 = api.getCandles(symbol, "1h", 200)
         val c4 = api.getCandles(symbol, "4h", 200)
