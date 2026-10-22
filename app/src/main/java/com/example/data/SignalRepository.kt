@@ -49,7 +49,7 @@ class SignalRepository(
         val c1 = api.getCandles(symbol, "1h", 200)
         val c4 = api.getCandles(symbol, "4h", 200)
         val r = SignalEngine.analyze(c1, c4) ?: return null
-
+        if (r.score < SignalScore.MIN_VISIBLE) return null
         val price = r.price
         val closes = c1.map { it.close }
         // 24h change: price now vs close 24 candles ago (1h candles)
