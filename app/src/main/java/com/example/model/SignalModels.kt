@@ -53,10 +53,11 @@ data class Signal(
         }
 
     // Profit % of each target relative to current price (works for buy and sell)
+    // النسب ثابتة من سعر الدخول الأول، وليست من السعر الحي.
     private fun profitPercentTo(target: Double): Double {
-        if (currentPrice <= 0.0) return 0.0
-        return kotlin.math.abs(target - currentPrice) / currentPrice * 100.0
-    }
+    if (entryPrice <= 0.0) return 0.0
+    return kotlin.math.abs(target - entryPrice) / entryPrice * 100.0
+}
     val target1ProfitPercent: Double get() = profitPercentTo(target1)
     val target2ProfitPercent: Double get() = profitPercentTo(target2)
     val target3ProfitPercent: Double get() = profitPercentTo(target3)
