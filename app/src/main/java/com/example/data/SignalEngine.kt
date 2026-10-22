@@ -139,6 +139,12 @@ object SignalEngine {
         val a = atr[last]
 val dir = if (side == Side.BUY) 1.0 else -1.0
 
+// Entry zone: between EMA20 and the last closed candle's close (closed data only, so it stays fixed within the hour)
+val zoneEdgeA = ema20[last]
+val zoneEdgeB = closes[last]
+val entryLow = minOf(zoneEdgeA, zoneEdgeB)
+val entryHigh = maxOf(zoneEdgeA, zoneEdgeB)
+
 return EngineResult(
     side = side,
     isLive = isLive,
