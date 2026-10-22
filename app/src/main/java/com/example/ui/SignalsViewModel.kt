@@ -49,12 +49,7 @@ class SignalsViewModel : ViewModel() {
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     init {
-        _uiState.update {
-            it.copy(
-                signals = getInitialSignals(),
-                lastUpdateTime = getCurrentFormattedTime()
-            )
-        }
+        viewModelScope.launch { loadRealSignals() }
         startCountdownTicker()
     }
 
