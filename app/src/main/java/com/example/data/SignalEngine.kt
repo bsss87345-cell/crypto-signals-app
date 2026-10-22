@@ -32,6 +32,21 @@ object SignalEngine {
     private fun closedOnly(candles: List<Candle>): List<Candle> =
         if (candles.size > 1) candles.dropLast(1) else emptyList()
 
+     // How many closed candles ago the last MACD cross happened in the given side's direction.
+    // 0 = on the last closed candle, up to 3. null if none within the last 4 candles.
+    private fun candlesSinceCross(macd: List<Double>, signal: List<Double>, side: Side): Int? {
+        val last = macd.lastIndex
+        for (age in 0..3) {
+            val i = last - age
+            if (i < 1) return null
+            val up = macd[i - 1] <= signal[i - 1] && macd[i] > signal[i]
+            val down = macd[i - 1] >= signal[i - 1] && macd[i] < signal[i]
+            if (side == Side.BUY && up) return age
+            if (side == Side.SELL && down) return age
+        }
+        return null
+    }
+
     // Direction of the 4h trend: EMA20 vs EMA50 on closed 4h candles. null if not enough data.
     fun trend4h(candles4h: List<Candle>): Side? {
         val closes = closedOnly(candles4h).map { it.close }
