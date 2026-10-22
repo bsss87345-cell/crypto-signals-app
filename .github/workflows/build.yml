@@ -23,6 +23,9 @@ jobs:
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
 
+      - name: Run unit tests
+        run: gradle testDebugUnitTest --stacktrace
+
       - uses: actions/upload-artifact@v4
         with:
           name: crypto-signals-debug
