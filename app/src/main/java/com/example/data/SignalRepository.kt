@@ -91,7 +91,10 @@ class SignalRepository(
             stopLoss = r.stopLoss,
             durationText = durationLabel,
             candleCloseSecondsRemaining = secondsLeft,
-            isBestOpportunity = false
+            isBestOpportunity = false,
+            entryLow = r.entryLow,
+            entryHigh = r.entryHigh,
+            validUntilMillis = nowMillis + validHours * 3_600_000L
         )
     }
 }
