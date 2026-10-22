@@ -43,11 +43,12 @@ data class Signal(
     val entryMid: Double
         get() = if (entryLow > 0.0 && entryHigh > 0.0) (entryLow + entryHigh) / 2.0 else currentPrice
 
-    // Stop loss distance in percentage: |currentPrice - stopLoss| / currentPrice
+        // Stop loss distance in percentage, measured from the entry zone midpoint (fixed, not from live price)
     val stopLossDistancePercent: Double
         get() {
-            if (currentPrice <= 0.0) return 0.02
-            val dist = kotlin.math.abs(currentPrice - stopLoss) / currentPrice
+            val base = entryMid
+            if (base <= 0.0) return 0.02
+            val dist = kotlin.math.abs(base - stopLoss) / base
             return if (dist <= 0.0001) 0.01 else dist
         }
 
