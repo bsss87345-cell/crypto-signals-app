@@ -52,6 +52,16 @@ class SignalRepository(
         val b = async { api.getCandles(symbol, "4h", 200) }
         Pair(a.await(), b.await())
         }
+                // Keep an active stored signal frozen until it expires or is closed
+        val stored = store?.get(coin)
+        if (stored != null) {
+            val tracked = SignalTracker.evaluate(stored, c1, nowMillis)
+            if (tracked.status == TrackStatus.ACTIVE) {
+                return signalFromStored(stored, c1, nowMillis)
+            }
+            store?.remove(coin)
+        }
+
         val r = SignalEngine.analyze(c1, c4) ?: return null
         if (r.score < SignalScore.MIN_VISIBLE) return null
         val price = r.price
