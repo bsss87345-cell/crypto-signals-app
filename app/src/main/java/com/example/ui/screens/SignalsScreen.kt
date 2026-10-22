@@ -435,7 +435,7 @@ private fun SignalCard(
                                 .background(if (isLive) RedAccent else TextMuted)
                         )
                         Text(
-                            text = signal.status.labelArabic,
+                            text = "${signal.scoreLabelArabic} ${signal.score}%",
                             color = if (isLive) RedAccent else TextSecondary,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold
