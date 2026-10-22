@@ -89,7 +89,7 @@ class SignalRepository(
             target2 = r.target2,
             target3 = r.target3,
             stopLoss = r.stopLoss,
-            durationText = "1 - 3 ساعات",
+            durationText = durationLabel,
             candleCloseSecondsRemaining = secondsLeft,
             isBestOpportunity = false
         )
