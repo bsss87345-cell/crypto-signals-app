@@ -65,6 +65,13 @@ class SignalRepository(
 
         val profit3 = abs(r.target3 - price) / price * 100.0
 
+        // Validity window by score: stronger score = shorter trade
+        val (durationLabel, validHours) = when {
+            r.score >= 80 -> Pair("1 - 2 ساعات", 2L)
+            r.score >= 60 -> Pair("1 - 3 ساعات", 3L)
+            else -> Pair("2 - 4 ساعات", 4L)
+        }
+
         return Signal(
             id = coin.lowercase() + "-1h",
             pair = "$coin/USDT",
