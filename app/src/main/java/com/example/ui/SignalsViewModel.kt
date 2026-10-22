@@ -58,6 +58,30 @@ class SignalsViewModel : ViewModel() {
         startCountdownTicker()
     }
 
+    private val repository = SignalRepository()
+
+    private fun sortSignals(list: List<Signal>): List<Signal> =
+        list.sortedWith(
+            compareBy<Signal> { it.status != SignalStatus.LIVE }
+                .thenBy { it.quality != SignalQuality.HIGHER }
+        )
+
+    private suspend fun loadRealSignals() {
+        _uiState.update { it.copy(isRefreshing = true) }
+        val result = try {
+            sortSignals(repository.loadSignals())
+        } catch (e: Exception) {
+            emptyList()
+        }
+        _uiState.update {
+            it.copy(
+                signals = result,
+                isRefreshing = false,
+                lastUpdateTime = getCurrentFormattedTime()
+            )
+        }
+    }
+
     private fun getCurrentFormattedTime(): String {
         val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         return sdf.format(Date())
