@@ -59,6 +59,18 @@ data class Signal(
             0.3 * target2ProfitPercent +
             0.3 * target3ProfitPercent
 
+        // Arabic label for the score: 90+ ممتاز ... 30+ انتظار
+    val scoreLabelArabic: String
+        get() = when {
+            score >= 90 -> "ممتاز"
+            score >= 80 -> "جيد جداً"
+            score >= 70 -> "جيد"
+            score >= 60 -> "متوسط"
+            score >= 50 -> "منخفض"
+            score >= 40 -> "قريب"
+            else -> "انتظار"
+        }
+
     // Calculates suggested investment details based on capital
     fun calculateInvestment(capital: Double): InvestmentSuggestion {
         val safeCapital = if (capital <= 0.0) 1000.0 else capital
