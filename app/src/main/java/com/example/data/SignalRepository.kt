@@ -83,6 +83,23 @@ class SignalRepository(
             else -> Pair("2 - 4 ساعات", 4L)
         }
 
+        store?.put(
+            StoredSignal(
+                coin = coin,
+                side = r.side,
+                score = r.score,
+                entryLow = r.entryLow,
+                entryHigh = r.entryHigh,
+                stopLoss = r.stopLoss,
+                target1 = r.target1,
+                target2 = r.target2,
+                target3 = r.target3,
+                durationText = durationLabel,
+                startMillis = nowMillis,
+                validUntilMillis = nowMillis + validHours * 3_600_000L
+            )
+        )
+
         return Signal(
             id = coin.lowercase() + "-1h",
             pair = "$coin/USDT",
