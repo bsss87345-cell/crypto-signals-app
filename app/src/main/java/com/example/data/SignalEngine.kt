@@ -145,6 +145,8 @@ val zoneEdgeB = closes[last]
 val entryLow = minOf(zoneEdgeA, zoneEdgeB)
 val entryHigh = maxOf(zoneEdgeA, zoneEdgeB)
 
+// Fixed levels are built from the middle of the entry zone (closed data only)
+val base = (entryLow + entryHigh) / 2.0
 return EngineResult(
     side = side,
     isLive = isLive,
