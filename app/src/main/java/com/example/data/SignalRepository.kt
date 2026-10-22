@@ -22,7 +22,7 @@ class SignalRepository(
             "TRX", "POL", "LTC", "BCH", "ATOM", "NEAR", "UNI", "APT", "ARB", "OP",
             "SUI", "INJ", "FIL", "ETC", "XLM", "HBAR", "AAVE", "ICP", "ALGO", "VET"
         )
-        private const val MAX_PARALLEL = 5
+        private const val MAX_PARALLEL = 10
     }
 
     // Fetches all coins, runs the engine, returns signals. Failed coins are skipped.
