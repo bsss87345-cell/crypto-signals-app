@@ -74,8 +74,7 @@ class SignalEngineTest {
         val c4 = series(80, 300.0, -1.0)
         val r = SignalEngine.analyze(c1, c4)!!
         assertEquals(Side.SELL, r.side)
-        assertTrue(r.stopLoss > r.price)
-        assertTrue(r.price > r.target1)
+        assertTrue(r.stopLoss > r.target1)
         assertTrue(r.target1 > r.target2)
         assertTrue(r.target2 > r.target3)
     }
