@@ -99,7 +99,6 @@ object SignalEngine {
         val sellCount = sellBasics.count { it }
         // Filters
         val trend = trend4h(candles4h)
-        val trendOk = trend == side
         val adxOk = adx[last] > ADX_MIN
         val volumes = closed.map { it.volume }
         val avgVolume = volumes.takeLast(VOLUME_AVG_PERIOD).average()
