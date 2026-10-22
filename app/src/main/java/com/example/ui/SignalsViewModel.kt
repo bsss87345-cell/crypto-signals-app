@@ -78,6 +78,7 @@ class SignalsViewModel : ViewModel() {
     init {
         viewModelScope.launch { loadRealSignals() }
         startCountdownTicker()
+        startLivePrices()
     }
     private fun sortSignals(list: List<Signal>): List<Signal> =
         list.sortedWith(
