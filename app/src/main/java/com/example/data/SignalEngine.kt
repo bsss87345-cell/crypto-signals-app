@@ -105,12 +105,6 @@ object SignalEngine {
         val avgVolume = volumes.takeLast(VOLUME_AVG_PERIOD).average()
         val volumeOk = volumes.last() > avgVolume
 
-        val isLive = basicsCount == 3 && trendOk && adxOk && volumeOk
-
-        val rsiNow = rsi[last]
-        val rsiComfortable = if (side == Side.BUY) rsiNow in 55.0..65.0 else rsiNow in 35.0..45.0
-        val higher = isLive && rsiComfortable && adx[last] > ADX_HIGH
-
         val price = candles1h.last().close // latest price (running candle)
 
         val volumeRatio = if (avgVolume > 0.0) volumes.last() / avgVolume else 0.0
