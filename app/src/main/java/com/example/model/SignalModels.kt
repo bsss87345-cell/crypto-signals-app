@@ -21,7 +21,15 @@ data class Signal(
     val coinSymbol: String,
     val status: SignalStatus,
     val direction: SignalDirection,
+       // هذا هو الحقل الوحيد الذي يتغير لحظيًا من Binance WebSocket.
     val currentPrice: Double,
+
+      // تثبت عند إنشاء الإشارة أو الصفقة.
+    val entryPrice: Double = currentPrice,
+    val entryZoneLow: Double = currentPrice,
+    val entryZoneHigh: Double = currentPrice,
+    val tradeDurationHours: Int = 0,
+
     val change24h: Double,
     val sparklinePoints: List<Float>,
     val quality: SignalQuality,
