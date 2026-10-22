@@ -66,7 +66,7 @@ class SignalRepository(
             id = coin.lowercase() + "-1h",
             pair = "$coin/USDT",
             coinSymbol = coin,
-            status = if (r.isLive) SignalStatus.LIVE else SignalStatus.PENDING,
+            status = if (SignalScore.isSignal(r.score)) SignalStatus.LIVE else SignalStatus.PENDING,
             direction = if (r.side == Side.BUY) SignalDirection.BUY else SignalDirection.SELL,
             currentPrice = price,
             change24h = Math.round(change24 * 100.0) / 100.0,
