@@ -14,7 +14,9 @@ data class EngineResult(
     val target2: Double,
     val target3: Double,
     val conditionsMet: Int,
-    val score: Int = 0
+    val score: Int = 0,
+    val entryLow: Double = 0.0,
+    val entryHigh: Double = 0.0
 )
 
 object SignalEngine {
