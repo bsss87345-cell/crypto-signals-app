@@ -356,7 +356,7 @@ private fun TabsSection(
                 SignalTab.ALL -> allCount
                 SignalTab.LIVE -> liveCount
                 SignalTab.PENDING -> pendingCount
-                else -> 0
+                SignalTab.HISTORY -> historyCount 
             }
 
             Box(
