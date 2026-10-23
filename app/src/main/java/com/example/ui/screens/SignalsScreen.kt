@@ -110,6 +110,7 @@ fun SignalsScreen(
             SignalTab.ALL -> signals
             SignalTab.LIVE -> signals.filter { it.status == SignalStatus.LIVE }
             SignalTab.PENDING -> signals.filter { it.status == SignalStatus.PENDING }
+            else -> emptyList()
         }
     }
 
