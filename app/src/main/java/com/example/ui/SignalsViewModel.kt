@@ -53,6 +53,8 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
+    private val historyStore = com.example.data.HistoryStore(application)
+
     private val repository = SignalRepository(
     store = com.example.data.SignalStore(application),
     history = com.example.data.HistoryStore(application)
