@@ -804,7 +804,8 @@ private fun HistoryCapsule(entry: HistoryEntry) {
         3 -> "تحقق الأهداف الثلاثة"
         else -> ""
     }
-    val outcome = when {
+        val outcome = when {
+        entry.status == TrackStatus.NOT_ENTERED -> "لم يُفعّل الدخول"
         entry.targetsHit == 0 && entry.status == TrackStatus.STOPPED -> "ضرب الوقف"
         entry.targetsHit == 0 -> "انتهت المدة بدون هدف"
         entry.status == TrackStatus.STOPPED -> "$hitsText ثم ضرب الوقف"
