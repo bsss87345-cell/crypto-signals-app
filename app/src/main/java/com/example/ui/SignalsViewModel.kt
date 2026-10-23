@@ -105,6 +105,7 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         _uiState.update {
             it.copy(
                 signals = result,
+                history = historyStore.all(),
                 isRefreshing = false,
                 lastUpdateTime = getCurrentFormattedTime()
             )
