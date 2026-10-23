@@ -527,7 +527,7 @@ private fun SignalCard(
             ) {
                 Column {
                     Text(
-                        text = "$${numberFormat.format(signal.currentPrice)}",
+                        text = "$${formatPrice(signal.currentPrice)}",
                         color = TextPrimary,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.ExtraBold
