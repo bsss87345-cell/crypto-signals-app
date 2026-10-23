@@ -80,6 +80,23 @@ data class Signal(
             else -> "انتظار"
         }
 
+        val hasEntryZone: Boolean
+        get() = entryLow > 0.0 && entryHigh > 0.0
+
+    // True when the live price is outside the entry zone by more than 0.25 x ATR (either side).
+    // ATR is derived from the stop distance: stop = zone midpoint -/+ STOP_ATR_MULT x ATR.
+    val isEntryDanger: Boolean
+        get() {
+            if (!hasEntryZone || currentPrice <= 0.0) return false
+            val atr = kotlin.math.abs(entryMid - stopLoss) / com.example.data.SignalEngine.STOP_ATR_MULT
+            val margin = 0.25 * atr
+            return currentPrice > entryHigh + margin || currentPrice < entryLow - margin
+        }
+
+    // Seconds left until the signal expires (0 when no validity is set)
+    fun validityRemainingSeconds(nowMillis: Long): Long =
+        if (validUntilMillis > 0L) ((validUntilMillis - nowMillis) / 1000L).coerceAtLeast(0L) else 0L
+
     // Calculates suggested investment details based on capital
     fun calculateInvestment(capital: Double): InvestmentSuggestion {
         val safeCapital = if (capital <= 0.0) 1000.0 else capital
