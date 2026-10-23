@@ -581,7 +581,7 @@ private fun SignalCard(
                                 )
                             } else {
                                 Text(
-                                    text = "$${numberFormat.format(signal.entryLow)}",
+                                    text = "$${formatPrice(signal.entryLow)}",
                                     color = TealPrimary,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
