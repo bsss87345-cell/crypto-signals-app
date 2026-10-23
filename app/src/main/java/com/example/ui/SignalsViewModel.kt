@@ -57,7 +57,7 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
 
     private val repository = SignalRepository(
     store = com.example.data.SignalStore(application),
-    history = com.example.data.HistoryStore(application)
+    history = historyStore
     )
     private val priceStream = PriceStream()
 
