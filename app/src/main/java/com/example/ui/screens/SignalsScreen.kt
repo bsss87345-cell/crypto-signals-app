@@ -757,7 +757,13 @@ private fun SignalCard(
     }
 }
 
-private fun formatCountdown(seconds: Long): String { 
+private fun formatValidity(seconds: Long): String {
+    val h = seconds / 3600
+    val m = (seconds % 3600) / 60
+    return if (h > 0) "${h}س ${m}د" else "${m}د"
+}
+
+private fun formatCountdown(seconds: Long): String {
     val m = seconds / 60
     val s = seconds % 60
     return String.format(Locale.US, "%02d:%02d", m, s)
