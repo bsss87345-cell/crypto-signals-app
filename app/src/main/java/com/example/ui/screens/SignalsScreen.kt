@@ -794,8 +794,9 @@ private fun HistoryCapsule(entry: HistoryEntry) {
     val numberFormat = remember { DecimalFormat("#,##0.00") }
     val isBuy = entry.side == Side.BUY
     val sideColor = if (isBuy) GreenAccent else RedAccent
-    val resultColor = if (entry.resultPercent >= 0) GreenAccent else RedAccent
-    val resultText = "${if (entry.resultPercent >= 0) "+" else ""}${numberFormat.format(entry.resultPercent)}%"
+    val notEntered = entry.status == TrackStatus.NOT_ENTERED
+    val resultColor = if (notEntered) TextMuted else if (entry.resultPercent >= 0) GreenAccent else RedAccent
+    val resultText = if (notEntered) "—" else "${if (entry.resultPercent >= 0) "+" else ""}${numberFormat.format(entry.resultPercent)}%"
 
     val hitsText = when (entry.targetsHit) {
         1 -> "تحقق الهدف 1"
