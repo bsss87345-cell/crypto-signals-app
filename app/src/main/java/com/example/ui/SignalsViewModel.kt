@@ -51,7 +51,8 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     private val repository = SignalRepository(
-    store = com.example.data.SignalStore(application)
+    store = com.example.data.SignalStore(application),
+    history = com.example.data.HistoryStore(application)
     )
     private val priceStream = PriceStream()
 
