@@ -59,6 +59,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.HistoryEntry
+import com.example.data.HistoryStats
+import com.example.data.HistorySummary
 import com.example.data.Side
 import com.example.data.TrackStatus
 import com.example.model.Signal
