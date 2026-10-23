@@ -28,8 +28,9 @@ enum class AppScreen {
 
 enum class SignalTab(val labelArabic: String) {
     ALL("الكل"),
-    LIVE("مباشر"),
-    PENDING("انتظار")
+    LIVE("جارية"),
+    PENDING("انتظار"),
+    HISTORY("السجل")
 }
 
 data class UiState(
