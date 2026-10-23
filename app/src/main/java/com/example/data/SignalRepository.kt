@@ -15,7 +15,8 @@ import kotlin.math.abs
 
 class SignalRepository(
     private val api: ExchangeApi = ExchangeApi(),
-    private val store: SignalStore? = null
+    private val store: SignalStore? = null,
+    private val history: HistoryStore? = null
 ) {
     companion object {
         val COINS = listOf(
