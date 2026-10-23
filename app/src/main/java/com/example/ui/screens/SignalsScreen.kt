@@ -897,6 +897,51 @@ private fun HistoryCapsule(entry: HistoryEntry) {
     }
 }
 
+@Composable
+private fun HistorySummaryRow(s: HistorySummary) {
+    val numberFormat = remember { DecimalFormat("#,##0.00") }
+    val avgColor = if (s.averagePercent >= 0) GreenAccent else RedAccent
+    val avgText = "${if (s.averagePercent >= 0) "+" else ""}${numberFormat.format(s.averagePercent)}%"
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(DarkBgElevated)
+            .padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            listOf(
+                Triple("مفعّلة", s.entered.toString(), TextPrimary),
+                Triple("رابحة", s.wins.toString(), GreenAccent),
+                Triple("خاسرة", s.losses.toString(), RedAccent),
+                Triple("بدون نتيجة", s.flat.toString(), TextSecondary)
+            ).forEach { (label, value, color) ->
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(text = label, color = TextMuted, fontSize = 11.sp)
+                    Text(text = value, color = color, fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
+                }
+            }
+        }
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = "متوسط النتيجة", color = TextMuted, fontSize = 11.sp)
+                Text(text = avgText, color = avgColor, fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = "لم يُفعّل الدخول", color = TextMuted, fontSize = 11.sp)
+                Text(text = s.notEntered.toString(), color = TextSecondary, fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
+            }
+        }
+        Text(
+            text = "تقدير بدون رسوم أو انزلاق سعري، وليس ضماناً لنتائج مستقبلية.",
+            color = TextMuted,
+            fontSize = 10.sp
+        )
+    }
+}
+
 private val priceFormatters = listOf(2, 3, 4, 5, 6).associateWith { d ->
     DecimalFormat("#,##0." + "0".repeat(d))
 }
