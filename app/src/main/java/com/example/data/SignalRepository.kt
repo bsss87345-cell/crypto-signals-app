@@ -60,7 +60,8 @@ class SignalRepository(
             if (tracked.status == TrackStatus.ACTIVE) {
                 return signalFromStored(stored, c1, nowMillis)
             }
-            store?.remove(coin)
+           recordHistory(stored, tracked, c1, nowMillis)
+            store?.remove(coin) 
         }
 
         val r = SignalEngine.analyze(c1, c4) ?: return null
