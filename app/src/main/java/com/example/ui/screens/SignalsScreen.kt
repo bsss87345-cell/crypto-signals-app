@@ -537,11 +537,39 @@ private fun SignalCard(
                     .padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                // Row 1: Target Price & Stop Loss
+                // Row 1: Entry zone, Stop Loss, Profit to target 3
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(text = "منطقة الدخول:", color = TextMuted, fontSize = 11.sp)
+                        if (signal.hasEntryZone) {
+                            if (signal.isEntryDanger) {
+                                Text(
+                                    text = "خطر الدخول حالياً",
+                                    color = RedAccent,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            } else {
+                                Text(
+                                    text = "$${numberFormat.format(signal.entryLow)}",
+                                    color = TealPrimary,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = "$${numberFormat.format(signal.entryHigh)}",
+                                    color = TealPrimary,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        } else {
+                            Text(text = "-", color = TextSecondary, fontSize = 12.sp)
+                        }
+                    }
                  Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "وقف الخسارة (SL):",
