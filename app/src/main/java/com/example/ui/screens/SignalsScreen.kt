@@ -341,6 +341,7 @@ private fun TabsSection(
     allCount: Int,
     liveCount: Int,
     pendingCount: Int,
+    historyCount: Int = 0,
     onTabSelected: (SignalTab) -> Unit
 ) {
     Row(
