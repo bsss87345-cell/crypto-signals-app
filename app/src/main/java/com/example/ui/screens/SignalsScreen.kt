@@ -169,7 +169,26 @@ fun SignalsScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-              if (filteredSignals.isEmpty()) {
+              if (selectedTab == SignalTab.HISTORY) {
+                    if (history.isEmpty()) {
+                        item {
+                            Text(
+                                text = "لا توجد صفقات مكتملة بعد. تظهر هنا الصفقات التي انتهت (هدف 3 أو وقف أو انتهاء المدة).",
+                                color = TextSecondary,
+                                fontSize = 14.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 48.dp)
+                            )
+                        }
+                    }
+                    items(history, key = { "${it.coin}-${it.startMillis}" }) { entry ->
+                        HistoryCapsule(entry)
+                    }
+                }
+
+                if (selectedTab != SignalTab.HISTORY && filteredSignals.isEmpty()) {
                     item {
                         Text(
                             text = if (isRefreshing) {
