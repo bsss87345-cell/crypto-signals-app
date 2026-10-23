@@ -186,6 +186,9 @@ fun SignalsScreen(
                             )
                         }
                     }
+                    if (history.isNotEmpty()) {
+                        item { HistorySummaryRow(HistoryStats.summarize(history)) }
+                    }
                     items(history, key = { "${it.coin}-${it.startMillis}" }) { entry ->
                         HistoryCapsule(entry)
                     }
