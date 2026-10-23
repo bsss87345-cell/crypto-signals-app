@@ -44,6 +44,7 @@ data class UiState(
     val savedCapital: Double = 10000.0,
     val activeInvestmentSignal: Signal? = null,
     val isRefreshing: Boolean = false,
+    val history: List<HistoryEntry> = emptyList(),
     val lastUpdateTime: String = ""
 )
 
