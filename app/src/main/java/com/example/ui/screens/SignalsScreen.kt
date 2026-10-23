@@ -864,7 +864,7 @@ private fun HistoryCapsule(entry: HistoryEntry) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 if (lastPrice != null) {
                     Text(
-                        text = "السعر: $${numberFormat.format(lastPrice)}",
+                        text = "السعر: $${formatPrice(lastPrice)}",
                         color = TextSecondary,
                         fontSize = 11.sp
                     )
