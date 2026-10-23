@@ -105,6 +105,7 @@ fun SignalsScreen(
     onOpenInvestmentDialog: (Signal) -> Unit,
     onCloseInvestmentDialog: () -> Unit,
     onCapitalChanged: (Double) -> Unit,
+    history: List<HistoryEntry> = emptyList(),
     modifier: Modifier = Modifier
 ) {
     // Filter signals based on selected tab
