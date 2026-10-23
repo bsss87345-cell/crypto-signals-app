@@ -50,7 +50,9 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    private val repository = SignalRepository()
+    private val repository = SignalRepository(
+    store = com.example.data.SignalStore(application)
+    )
     private val priceStream = PriceStream()
 
     // Live prices: updates only currentPrice of each card
