@@ -604,7 +604,7 @@ private fun SignalCard(
                             fontSize = 11.sp
                         )
                         Text(
-                            text = "$${numberFormat.format(signal.stopLoss)}",
+                            text = "$${formatPrice(signal.stopLoss)}",
                             color = RedAccent,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
