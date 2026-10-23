@@ -1,6 +1,6 @@
 package com.example.data
 
-enum class TrackStatus { ACTIVE, STOPPED, TARGET3, EXPIRED }
+enum class TrackStatus { ACTIVE, STOPPED, TARGET3, EXPIRED, NOT_ENTERED }
 
 data class TrackResult(
     val status: TrackStatus,
