@@ -45,7 +45,7 @@ data class UiState(
     val lastUpdateTime: String = ""
 )
 
-class SignalsViewModel : ViewModel() {
+class SignalsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
