@@ -782,6 +782,114 @@ private fun SignalCard(
     }
 }
 
+@Composable
+private fun HistoryCapsule(entry: HistoryEntry) {
+    val numberFormat = remember { DecimalFormat("#,##0.00") }
+    val isBuy = entry.side == Side.BUY
+    val sideColor = if (isBuy) GreenAccent else RedAccent
+    val resultColor = if (entry.resultPercent >= 0) GreenAccent else RedAccent
+    val resultText = "${if (entry.resultPercent >= 0) "+" else ""}${numberFormat.format(entry.resultPercent)}%"
+
+    val hitsText = when (entry.targetsHit) {
+        1 -> "تحقق الهدف 1"
+        2 -> "تحقق الهدفان 1 و2"
+        3 -> "تحقق الأهداف الثلاثة"
+        else -> ""
+    }
+    val outcome = when {
+        entry.targetsHit == 0 && entry.status == TrackStatus.STOPPED -> "ضرب الوقف"
+        entry.targetsHit == 0 -> "انتهت المدة بدون هدف"
+        entry.status == TrackStatus.STOPPED -> "$hitsText ثم ضرب الوقف"
+        else -> hitsText
+    }
+    val lastPrice = entry.sparkline.lastOrNull()?.toDouble()
+    val dateText = java.text.SimpleDateFormat("dd/MM HH:mm", Locale.getDefault())
+        .format(java.util.Date(entry.endMillis))
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(26.dp))
+            .background(CardBg)
+            .border(1.dp, TealBorder, RoundedCornerShape(26.dp))
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                CoinIcon(symbol = entry.coin, size = 34.dp)
+                Column {
+                    Text(
+                        text = "${entry.coin}/USDT",
+                        color = TextPrimary,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(text = dateText, color = TextMuted, fontSize = 11.sp)
+                }
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = if (isBuy) "شراء" else "بيع",
+                    color = sideColor,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = resultText,
+                    color = resultColor,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.ExtraBold
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                if (lastPrice != null) {
+                    Text(
+                        text = "السعر: $${numberFormat.format(lastPrice)}",
+                        color = TextSecondary,
+                        fontSize = 11.sp
+                    )
+                }
+                Text(
+                    text = "الدخول: $${numberFormat.format(entry.entryLow)} - $${numberFormat.format(entry.entryHigh)}",
+                    color = TealPrimary,
+                    fontSize = 11.sp
+                )
+                Text(
+                    text = outcome,
+                    color = resultColor,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(32.dp)
+            ) {
+                SparklineChart(points = entry.sparkline, lineColor = sideColor)
+            }
+        }
+    }
+}
+
 private fun formatValidity(seconds: Long): String {
     val h = seconds / 3600
     val m = (seconds % 3600) / 60
