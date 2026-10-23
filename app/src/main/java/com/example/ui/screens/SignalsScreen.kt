@@ -892,6 +892,22 @@ private fun HistoryCapsule(entry: HistoryEntry) {
     }
 }
 
+private val priceFormatters = listOf(2, 3, 4, 5, 6).associateWith { d ->
+    DecimalFormat("#,##0." + "0".repeat(d))
+}
+
+// Price with more decimals for cheap coins, so entry/stop/targets stay distinguishable
+private fun formatPrice(value: Double): String {
+    val decimals = when {
+        value >= 1000.0 -> 2
+        value >= 10.0 -> 3
+        value >= 1.0 -> 4
+        value >= 0.1 -> 5
+        else -> 6
+    }
+    return priceFormatters.getValue(decimals).format(value)
+}
+
 private fun formatValidity(seconds: Long): String {
     val h = seconds / 3600
     val m = (seconds % 3600) / 60
