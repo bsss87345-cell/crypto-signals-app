@@ -128,6 +128,43 @@ class SignalRepository(
         )
     }
 
+    // Saves a finished trade (score 50+) to the history before the stored signal is removed
+    private fun recordHistory(s: StoredSignal, tracked: TrackResult, c1: List<Candle>, nowMillis: Long) {
+        if (history == null || !SignalScore.isSignal(s.score)) return
+        val endMillis = if (tracked.status == TrackStatus.EXPIRED) s.validUntilMillis else nowMillis
+        val mid = (s.entryLow + s.entryHigh) / 2.0
+        val lastClose = c1.lastOrNull { it.openTime < s.validUntilMillis }?.close ?: c1.last().close
+        val result = HistoryCalc.resultPercent(
+            side = s.side,
+            entryMid = mid,
+            targets = listOf(s.target1, s.target2, s.target3),
+            stopLoss = s.stopLoss,
+            targetsHit = tracked.targetsHit,
+            status = tracked.status,
+            lastClose = lastClose
+        )
+        val spark = c1.filter { it.openTime < endMillis }.takeLast(24).map { it.close.toFloat() }
+        history.add(
+            HistoryEntry(
+                coin = s.coin,
+                side = s.side,
+                score = s.score,
+                entryLow = s.entryLow,
+                entryHigh = s.entryHigh,
+                stopLoss = s.stopLoss,
+                target1 = s.target1,
+                target2 = s.target2,
+                target3 = s.target3,
+                targetsHit = tracked.targetsHit,
+                status = tracked.status,
+                resultPercent = result,
+                startMillis = s.startMillis,
+                endMillis = endMillis,
+                sparkline = spark
+            )
+        )
+    }
+
     // Rebuilds a card from a stored (frozen) signal. Only price, chart and 24h change are live.
     private fun signalFromStored(s: StoredSignal, c1: List<Candle>, nowMillis: Long): Signal {
         val price = c1.last().close
