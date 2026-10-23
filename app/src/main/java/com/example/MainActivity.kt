@@ -84,7 +84,8 @@ class MainActivity : ComponentActivity() {
                                     onRefresh = viewModel::refreshSignals,
                                     onOpenInvestmentDialog = viewModel::openInvestmentDialog,
                                     onCloseInvestmentDialog = viewModel::closeInvestmentDialog,
-                                    onCapitalChanged = viewModel::updateCapital
+                                    onCapitalChanged = viewModel::updateCapital,
+                                    history = uiState.history
                                 )
                             }
                         }
