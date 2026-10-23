@@ -587,7 +587,7 @@ private fun SignalCard(
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = "$${numberFormat.format(signal.entryHigh)}",
+                                    text = "$${formatPrice(signal.entryHigh)}",
                                     color = TealPrimary,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
