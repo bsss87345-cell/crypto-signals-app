@@ -158,6 +158,7 @@ fun SignalsScreen(
                 allCount = signals.size,
                 liveCount = liveCount,
                 pendingCount = pendingCount,
+                historyCount = history.size,
                 onTabSelected = onTabSelected
             )
 
