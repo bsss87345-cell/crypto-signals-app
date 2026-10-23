@@ -665,7 +665,7 @@ private fun SignalCard(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(text = "هدف 3:", color = TextMuted, fontSize = 11.sp)
                         Text(
-                            text = "$${numberFormat.format(signal.target3)}",
+                            text = "$${formatPrice(signal.target3)}",
                             color = GreenAccent,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold
