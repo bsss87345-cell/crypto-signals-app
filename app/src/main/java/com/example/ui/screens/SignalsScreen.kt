@@ -693,7 +693,7 @@ private fun SignalCard(
                             modifier = Modifier.size(12.dp)
                         )
                         Text(
-                            text = "متبقي للدخول: ${formatCountdown(signal.candleCloseSecondsRemaining)}",
+                            text = "صلاحية الإشارة: ${formatValidity(signal.validityRemainingSeconds(System.currentTimeMillis()))}",
                             color = TealPrimary,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.SemiBold
