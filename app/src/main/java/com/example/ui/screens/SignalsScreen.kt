@@ -870,7 +870,7 @@ private fun HistoryCapsule(entry: HistoryEntry) {
                     )
                 }
                 Text(
-                    text = "الدخول: $${numberFormat.format(entry.entryLow)} - $${numberFormat.format(entry.entryHigh)}",
+                    text = "الدخول: $${formatPrice(entry.entryLow)} - $${formatPrice(entry.entryHigh)}",
                     color = TealPrimary,
                     fontSize = 11.sp
                 )
