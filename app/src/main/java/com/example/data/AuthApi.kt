@@ -51,6 +51,7 @@ class AuthApi {
         val (_, json) = call(postRequest("/register", body))
         if (json == null) return AuthResult.Failure("network")
         val status = json.optString("status")
+        if (status == "banned") return AuthResult.Failure("banned")
         if (status.isNotEmpty()) return AuthResult.Registered(status)
         return AuthResult.Failure(json.optString("error", "server_error"))
     }
