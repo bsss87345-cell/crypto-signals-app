@@ -273,13 +273,39 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         _uiState.update { it.copy(telegramUsername = username, usernameError = null) }
     }
 
-    fun submitUsername() {
+        fun submitUsername() {
         val username = _uiState.value.telegramUsername.trim()
         if (username.isEmpty()) {
             _uiState.update { it.copy(usernameError = "يرجى إدخال اسم المستخدم") }
             return
         }
-        _uiState.update { it.copy(currentScreen = AppScreen.ACCESS_CODE, usernameError = null) }
+        _uiState.update { it.copy(usernameError = null, isRefreshing = true) }
+        viewModelScope.launch {
+            val result = authApi.register(
+                username = username,
+                deviceName = android.os.Build.MODEL ?: "Android",
+                deviceId = deviceId()
+            )
+            val message: String? = when (result) {
+                is com.example.data.AuthResult.Registered -> when (result.status) {
+                    "pending" -> "تم إرسال طلبك، بانتظار موافقة الأدمن"
+                    "approved" -> null
+                    else -> "حدث خطأ، حاول لاحقاً"
+                }
+                is com.example.data.AuthResult.Failure -> when (result.code) {
+                    "banned" -> "الحساب محظور"
+                    "too_many_requests" -> "محاولات كثيرة، انتظر قليلاً"
+                    "network" -> "تعذر الاتصال بالسيرفر"
+                    else -> "حدث خطأ، حاول لاحقاً"
+                }
+                is com.example.data.AuthResult.Success -> null
+            }
+            if (message == null && result is com.example.data.AuthResult.Registered) {
+                _uiState.update { it.copy(isRefreshing = false, currentScreen = AppScreen.ACCESS_CODE) }
+            } else {
+                _uiState.update { it.copy(isRefreshing = false, usernameError = message) }
+            }
+        }
     }
 
     fun onAccessCodeChanged(code: String) {
