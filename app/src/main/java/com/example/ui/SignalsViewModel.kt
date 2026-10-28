@@ -60,6 +60,13 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
     history = historyStore
     )
     private val priceStream = PriceStream()
+    private val authApi = com.example.data.AuthApi()
+
+    private fun deviceId(): String =
+        android.provider.Settings.Secure.getString(
+            getApplication<Application>().contentResolver,
+            android.provider.Settings.Secure.ANDROID_ID
+        ) ?: "unknown"
 
     // Live prices: updates only currentPrice of each card
     private fun startLivePrices() {
