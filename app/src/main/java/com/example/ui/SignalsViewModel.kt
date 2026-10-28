@@ -45,9 +45,9 @@ data class UiState(
     val activeInvestmentSignal: Signal? = null,
     val isRefreshing: Boolean = false,
     val history: List<HistoryEntry> = emptyList(),
-    val lastUpdateTime: String = ""
+    val lastUpdateTime: String = "",
+    val isSubmittingCode: Boolean = false
 )
-
 class SignalsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(UiState())
