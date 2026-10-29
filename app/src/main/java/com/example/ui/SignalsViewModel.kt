@@ -99,7 +99,7 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         startSessionWatcher()
     }
 
-    // While the app is open: re-check the session every 60 seconds.
+    // While the app is open: re-check the session every 15 seconds.
     private fun startSessionWatcher() {
         val prefs = getApplication<Application>()
             .getSharedPreferences("auth", Application.MODE_PRIVATE)
