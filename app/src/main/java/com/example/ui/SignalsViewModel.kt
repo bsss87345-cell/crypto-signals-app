@@ -98,6 +98,29 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         checkSavedSession()
     }
 
+    // While the app is open: re-check the session every 60 seconds.
+    private fun startSessionWatcher() {
+        val prefs = getApplication<Application>()
+            .getSharedPreferences("auth", Application.MODE_PRIVATE)
+        viewModelScope.launch {
+            while (true) {
+                delay(60_000)
+                val token = prefs.getString("token", null) ?: continue
+                val status = authApi.checkStatus(token)
+                if (status == "network" || status == "active") continue
+                prefs.edit().remove("token").remove("expires_at").apply()
+                val msg = when (status) {
+                    "banned" -> "الحساب محظور"
+                    "access_expired" -> "انتهت مدة الاشتراك، تواصل مع الإدارة"
+                    else -> null
+                }
+                _uiState.update {
+                    it.copy(currentScreen = AppScreen.USERNAME, usernameError = msg, accessCode = "")
+                }
+            }
+        }
+    }
+
     // On app start: if a token is saved, verify it with /status.
     private fun checkSavedSession() {
         val prefs = getApplication<Application>()
