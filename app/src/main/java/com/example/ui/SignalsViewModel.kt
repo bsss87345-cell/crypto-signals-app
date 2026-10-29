@@ -105,7 +105,7 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
             .getSharedPreferences("auth", Application.MODE_PRIVATE)
         viewModelScope.launch {
             while (true) {
-                delay(60_000)
+                delay(15_000)
                 val token = prefs.getString("token", null) ?: continue
                 val status = authApi.checkStatus(token)
                 if (status == "network" || status == "active") continue
