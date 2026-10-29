@@ -314,13 +314,43 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         _uiState.update { it.copy(accessCode = sanitized, accessCodeError = null) }
     }
 
-    fun submitAccessCode() {
+        fun submitAccessCode() {
         val code = _uiState.value.accessCode.trim()
         if (code.length != 8) {
             _uiState.update { it.copy(accessCodeError = "يجب أن يتكون كود الوصول من 8 خانات") }
             return
         }
-        _uiState.update { it.copy(currentScreen = AppScreen.SIGNALS, accessCodeError = null) }
+        val username = _uiState.value.telegramUsername.trim()
+        _uiState.update { it.copy(isSubmittingCode = true, accessCodeError = null) }
+        viewModelScope.launch {
+            val result = authApi.login(username, code, deviceId())
+            val error: String? = when (result) {
+                is com.example.data.AuthResult.Success -> {
+                    getApplication<Application>()
+                        .getSharedPreferences("auth", Application.MODE_PRIVATE)
+                        .edit()
+                        .putString("token", result.token)
+                        .putLong("expires_at", result.expiresAt)
+                        .apply()
+                    null
+                }
+                is com.example.data.AuthResult.Failure -> when (result.code) {
+                    "invalid_credentials" -> "الكود أو اليوزر غير صحيح"
+                    "device_mismatch" -> "هذا الكود مرتبط بجهاز آخر"
+                    "code_expired" -> "انتهت صلاحية الكود"
+                    "banned" -> "الحساب محظور"
+                    "too_many_attempts" -> "محاولات كثيرة، انتظر 15 دقيقة"
+                    "network" -> "تعذر الاتصال بالسيرفر"
+                    else -> "حدث خطأ، حاول لاحقاً"
+                }
+                is com.example.data.AuthResult.Registered -> "حدث خطأ، حاول لاحقاً"
+            }
+            if (error == null) {
+                _uiState.update { it.copy(isSubmittingCode = false, currentScreen = AppScreen.SIGNALS) }
+            } else {
+                _uiState.update { it.copy(isSubmittingCode = false, accessCodeError = error) }
+            }
+        }
     }
 
     fun navigateBack() {
