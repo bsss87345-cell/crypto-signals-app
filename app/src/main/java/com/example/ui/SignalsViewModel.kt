@@ -96,6 +96,7 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         startCountdownTicker()
         startLivePrices()
         checkSavedSession()
+        startSessionWatcher()
     }
 
     // While the app is open: re-check the session every 60 seconds.
