@@ -91,10 +91,34 @@ class SignalsViewModel(application: Application) : AndroidViewModel(application)
         super.onCleared()
     }
 
-    init {
+        init {
         viewModelScope.launch { loadRealSignals() }
         startCountdownTicker()
         startLivePrices()
+        checkSavedSession()
+    }
+
+    // On app start: if a token is saved, verify it with /status.
+    private fun checkSavedSession() {
+        val prefs = getApplication<Application>()
+            .getSharedPreferences("auth", Application.MODE_PRIVATE)
+        val token = prefs.getString("token", null) ?: return
+        viewModelScope.launch {
+            val status = authApi.checkStatus(token)
+            when (status) {
+                "active" -> _uiState.update { it.copy(currentScreen = AppScreen.SIGNALS) }
+                "network" -> _uiState.update { it.copy(currentScreen = AppScreen.SIGNALS) }
+                else -> {
+                    prefs.edit().remove("token").remove("expires_at").apply()
+                    val msg = when (status) {
+                        "banned" -> "الحساب محظور"
+                        "access_expired" -> "انتهت مدة الاشتراك، تواصل مع الإدارة"
+                        else -> null
+                    }
+                    _uiState.update { it.copy(currentScreen = AppScreen.USERNAME, usernameError = msg) }
+                }
+            }
+        }
     }
     private fun sortSignals(list: List<Signal>): List<Signal> =
         list.sortedWith(
